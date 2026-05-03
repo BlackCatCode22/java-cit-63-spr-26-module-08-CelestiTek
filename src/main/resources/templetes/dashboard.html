@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+
+<head>
+    <title>Weather Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 40px; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: #1c1e21; margin-bottom: 30px; }
+        .container { display: flex; gap: 20px; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 300px; padding: 25px; text-align: center; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .city-name { font-size: 1.5rem; font-weight: bold; color: #007bff; margin-bottom: 10px; }
+        .temp { font-size: 3rem; font-weight: bold; color: #333; margin: 15px 0; }
+        .forecast { color: #666; font-style: italic; min-height: 50px; }
+        .wind { margin-top: 15px; font-size: 0.9rem; color: #888; }
+    </style>
+</head>
+<body>
+<h1>Global Weather Dashboard</h1>
+
+<div class="container">
+    <!-- Fresno Card -->
+    <div class="card">
+        <div class="city-name">Fresno, CA</div>
+        <div class="temp" th:text="${fresno.temperature + '°' + fresno.temperatureUnit}">75°F</div>
+        <div class="forecast" th:text="${fresno.shortForecast}">Sunny</div>
+        <div class="wind" th:text="'Wind: ' + ${fresno.windSpeed} + ' ' + ${fresno.windDirection}">Wind: 5 mph NW</div>
+    </div>
+
+    <!-- New York Card -->
+    <div class="card">
+        <div class="city-name">New York, NY</div>
+        <div class="temp" th:text="${ny.temperature + '°' + ny.temperatureUnit}">62°F</div>
+        <div class="forecast" th:text="${ny.shortForecast}">Partly Cloudy</div>
+        <div class="wind" th:text="'Wind: ' + ${ny.windSpeed} + ' ' + ${ny.windDirection}">Wind: 10 mph E</div>
+    </div>
+</div>
+</body>
+</html>
