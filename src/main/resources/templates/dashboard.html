@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <meta charset="UTF-8">
 
 <head>
@@ -23,17 +23,18 @@
     <!-- Fresno Card -->
     <div class="card">
         <div class="city-name">Fresno, CA</div>
-        <div class="temp" th:text="${fresno.temperature + '°' + fresno.temperatureUnit}">75°F</div>
-        <div class="forecast" th:text="${fresno.shortForecast}">Sunny</div>
-        <div class="wind" th:text="'Wind: ' + ${fresno.windSpeed} + ' ' + ${fresno.windDirection}">Wind: 5 mph NW</div>
+        <!-- Use .get() and .asText() for JsonNodes -->
+        <div class="temp" th:text="${fresno.get('temperature').asText() + '°' + fresno.get('temperatureUnit').asText()}">75°F</div>
+        <div class="forecast" th:text="${fresno.get('shortForecast').asText()}">Sunny</div>
+        <div class="wind" th:text="'Wind: ' + ${fresno.get('windSpeed').asText()} + ' ' + ${fresno.get('windDirection').asText()}">Wind: 5 mph NW</div>
     </div>
 
     <!-- New York Card -->
     <div class="card">
         <div class="city-name">New York, NY</div>
-        <div class="temp" th:text="${ny.temperature + '°' + ny.temperatureUnit}">62°F</div>
-        <div class="forecast" th:text="${ny.shortForecast}">Partly Cloudy</div>
-        <div class="wind" th:text="'Wind: ' + ${ny.windSpeed} + ' ' + ${ny.windDirection}">Wind: 10 mph E</div>
+        <div class="temp" th:text="${ny.get('temperature').asText() + '°' + ny.get('temperatureUnit').asText()}">62°F</div>
+        <div class="forecast" th:text="${ny.get('shortForecast').asText()}">Partly Cloudy</div>
+        <div class="wind" th:text="'Wind: ' + ${ny.get('windSpeed').asText()} + ' ' + ${ny.get('windDirection').asText()}">Wind: 10 mph E</div>
     </div>
 </div>
 </body>

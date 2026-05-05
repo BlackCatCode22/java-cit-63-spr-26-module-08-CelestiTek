@@ -24,15 +24,18 @@ public class WeatherApplication {
     // Task B: The Human-Readable Dashboard
     @GetMapping("/")
     public String getDashboard(Model model) {
-        // Fetch data for both cities
         JsonNode fresnoData = fetchForecastNode("36.7378", "-119.7871");
         JsonNode nyData = fetchForecastNode("40.7128", "-74.0060");
 
-        // Add them to the Thymeleaf model to be used in HTML
+        // CRITICAL: If the API fails, the application will crash without this check
+        if (fresnoData == null || nyData == null) {
+            return "error"; // Ensure you have an error.html in your templates folder
+        }
+
         model.addAttribute("fresno", fresnoData.path("properties").path("periods").get(0));
         model.addAttribute("ny", nyData.path("properties").path("periods").get(0));
 
-        return "dashboard"; // This looks for src/main/resources/templates/dashboard.html
+        return "dashboard";
     }
 
     // Keep the Task A JSON endpoints for testing
@@ -43,7 +46,7 @@ public class WeatherApplication {
     private JsonNode fetchForecastNode(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.set("User-Agent", "Jose-A-App");
+        headers.set("User-Agent", "Jose-A-App (Contact: darroyo91016@gmail.com)");
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         try {
@@ -53,6 +56,8 @@ public class WeatherApplication {
 
             return restTemplate.exchange(forecastUrl, HttpMethod.GET, entity, JsonNode.class).getBody();
         } catch (Exception e) {
+            System.out.println("API Fetch Error: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }
